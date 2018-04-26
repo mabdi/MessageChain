@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="message-chain">
+    <output-path>$PROJECT_DIR$/out/artifacts/message_chain</output-path>
+    <root id="archive" name="message-chain.jar">
+      <element id="module-output" name="MessageChain" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/rsyntaxtextarea-2.6.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
