@@ -4,6 +4,8 @@ import burp.BurpExtender;
 import burp.IContextMenuFactory;
 import burp.IContextMenuInvocation;
 import burp.ITab;
+import messagechain.controller.Controller;
+import messagechain.model.Context;
 import messagechain.view.abstracts.AbstractTab;
 
 import javax.swing.*;
@@ -39,7 +41,6 @@ public class View implements ITab, IContextMenuFactory {
                     try {
                         if ("...".equals(tabsPane.getTitleAt(tabsPane.getSelectedIndex()))) {
                             BurpExtender.newContext();
-                            tabsPane.setSelectedIndex(tabsPane.getTabCount()-2);
                         }
                     } finally {
                         ignore = false;
@@ -55,6 +56,7 @@ public class View implements ITab, IContextMenuFactory {
         int index = tabsPane.getTabCount()-1;
         final String title = tab.getTabTitle();
         tabsPane.insertTab(title,null, tab,null,index);
+        tabsPane.setSelectedIndex(index);
         JPanel pnlTab = new JPanel(new GridBagLayout());
         pnlTab.setOpaque(false);
         JLabel lblTitle = new JLabel(title);
@@ -101,13 +103,49 @@ public class View implements ITab, IContextMenuFactory {
 
     @Override
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
-        JMenu jmi = new JMenu("Send to Message Chain");
-        JMenuItem jmi1 = new JMenuItem("1");
-        JMenuItem jmi2 = new JMenuItem("Add to New");
-        jmi.add(jmi1);
-        jmi.add(jmi2);
+        JMenuItem jmi = getAddtoMenu(invocation);
+        JMenuItem jmi2 = getGlobalVarMenu(invocation);
+
         List<JMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(jmi);
+        if(jmi != null){
+            menuItems.add(jmi);
+        }
+        if(jmi2 != null){
+            menuItems.add(jmi2);
+        }
         return menuItems;
+    }
+
+    // TODO make global vars from menu
+    private JMenuItem getGlobalVarMenu(IContextMenuInvocation invocation) {
+        JMenu jmi = new JMenu("Make as a Message Chain Global var");
+//        invocation.getSelectionBounds()
+        return null;
+    }
+
+    private JMenuItem getAddtoMenu(IContextMenuInvocation invocation){
+        JMenu jmi = new JMenu("Send to Message Chain");
+        Controller controller = BurpExtender.getController();
+        List<Context> contexts = controller.getContexts();
+        for(Context context:contexts){
+            JMenuItem jmi1 = new JMenuItem(context.getName());
+            jmi1.addActionListener(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    context.addMessages(invocation.getSelectedMessages());
+                }
+            });
+            jmi.add(jmi1);
+        }
+        JMenuItem jmi2 = new JMenuItem("Add to New");
+        jmi2.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Context context = BurpExtender.newContext();
+                context.addMessages(invocation.getSelectedMessages());
+            }
+        });
+        jmi.add(jmi2);
+        return jmi;
     }
 }

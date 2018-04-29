@@ -1,6 +1,7 @@
 package burp;
 
 import messagechain.controller.Controller;
+import messagechain.model.Context;
 import messagechain.view.View;
 
 import javax.swing.*;
@@ -9,11 +10,11 @@ import java.io.PrintWriter;
 public class BurpExtender implements IBurpExtender {
     private static final String EXTENSION_NAME = "Message Chain";
     private static BurpExtender instance = null;
-    private IBurpExtenderCallbacks callbacks;
-    private IExtensionHelpers helpers;
+    private static IBurpExtenderCallbacks callbacks;
+    private static IExtensionHelpers helpers;
     private static View view;
     private static Controller controller;
-    PrintWriter stdout;
+    private static PrintWriter stdout;
 
     public static View getView() {
         return view;
@@ -23,8 +24,10 @@ public class BurpExtender implements IBurpExtender {
         return controller;
     }
 
-    public static void newContext(){
-        view.addUI(controller.newContext().getUI());
+    public static Context newContext(){
+        Context context = controller.newContext();
+        view.addUI(context.getUI());
+        return context;
     }
 
     @Override
@@ -49,15 +52,15 @@ public class BurpExtender implements IBurpExtender {
         stdout.println("Plugin registerd "+EXTENSION_NAME);
     }
 
-    public PrintWriter getStdout() {
+    public static PrintWriter getStdout() {
         return stdout;
     }
 
-    public IExtensionHelpers getHelpers() {
+    public static IExtensionHelpers getHelpers() {
         return helpers;
     }
 
-    public IBurpExtenderCallbacks getCallbacks() {
+    public static IBurpExtenderCallbacks getCallbacks() {
         return callbacks;
     }
 

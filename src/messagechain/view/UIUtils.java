@@ -21,6 +21,21 @@ public class UIUtils {
         JOptionPane.showMessageDialog(BurpExtender.getView().getUiComponent(),"Error occurred.","Error",JOptionPane.ERROR_MESSAGE);
     }
 
+    public static void deleteSelectedFromList(JList list, DefaultListModel model)
+    {
+        if(list.getSelectedIndex()<0){
+            return;
+        }
+        int rsp = JOptionPane.showConfirmDialog(BurpExtender.getView().getUiComponent(),
+                "Are you sure to delete?","Delete",JOptionPane.YES_NO_OPTION);
+        if(rsp == JOptionPane.YES_OPTION){
+            int sel = list.getSelectedIndex();
+            list.setSelectedIndex(0);
+            model.remove(sel);
+        }
+    }
+
+
     public static JPopupMenu buildNewPopMenuCopyCutPaste(){
         JPopupMenu menu = new JPopupMenu();
         Action cut = new DefaultEditorKit.CutAction();

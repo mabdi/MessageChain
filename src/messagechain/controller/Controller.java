@@ -12,6 +12,10 @@ public class Controller {
     List<Context> contexts = new ArrayList<>();
     int contextNums = 1;
 
+    public List<Context> getContexts() {
+        return contexts;
+    }
+
     public Context newContext() {
         Context c = new Context();
         contexts.add(c);

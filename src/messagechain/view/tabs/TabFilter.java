@@ -1,6 +1,8 @@
 package messagechain.view.tabs;
 
 import burp.BurpExtender;
+import messagechain.model.Context;
+import messagechain.view.UIUtils;
 import messagechain.view.abstracts.AbstractTab;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -17,6 +19,7 @@ import java.awt.event.ActionListener;
  * Created by User on 4/26/2018.
  */
 public class TabFilter extends AbstractTab {
+    private final Context context;
     private JSplitPane pane;
     private RTextScrollPane codeEditor;
     private RSyntaxTextArea textArea;
@@ -24,7 +27,11 @@ public class TabFilter extends AbstractTab {
     private DefaultListModel modelFilters;
     private JList jlistFilters;
 
-    @Override
+    public TabFilter(Context context) {
+        this.context = context;
+        initUI();
+    }
+
     protected void initUI() {
         pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         pane.setDividerLocation(0.2);
@@ -95,16 +102,7 @@ public class TabFilter extends AbstractTab {
             removeSequence.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(jlistFilters.getSelectedIndex()<0){
-                        return;
-                    }
-                    int rsp = JOptionPane.showConfirmDialog(BurpExtender.getView().getUiComponent(),
-                            "Are you sure to delete?","Delete",JOptionPane.YES_NO_OPTION);
-                    if(rsp == JOptionPane.YES_OPTION){
-                        int sel = jlistFilters.getSelectedIndex();
-                        jlistFilters.setSelectedIndex(0);
-                        modelFilters.remove(sel);
-                    }
+                    UIUtils.deleteSelectedFromList(jlistFilters,modelFilters);
                 }
             });
             btns.add(addSequence);

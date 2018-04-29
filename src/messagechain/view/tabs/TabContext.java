@@ -16,15 +16,19 @@ public class TabContext extends AbstractTab {
 
     public TabContext(Context context) {
         this.context = context;
+        initUI();
     }
 
-    @Override
     protected void initUI() {
         setLayout(new BorderLayout());
         tabsPane = new JTabbedPane();
-        tabsPane.addTab("Messages",new TabMessages());
-        tabsPane.addTab("Filters",new TabFilter());
-        tabsPane.addTab("Params",new TabParams());
+        TabMessages tabMessages = new TabMessages(context);
+        TabFilter tabFilter = new TabFilter(context);
+        TabParams tabParams = new TabParams(context);
+
+        tabsPane.addTab("Messages",tabMessages);
+        tabsPane.addTab("Filters", tabFilter);
+        tabsPane.addTab("Params",tabParams);
         add(tabsPane,BorderLayout.CENTER);
     }
 

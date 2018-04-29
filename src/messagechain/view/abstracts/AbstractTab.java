@@ -7,12 +7,12 @@ import javax.swing.*;
  */
 public abstract class AbstractTab extends JPanel {
 
-    abstract protected void initUI();
+//    abstract protected void initUI();
 
     abstract public String getTabTitle();
 
-    public AbstractTab(){
-        initUI();
-    }
+//    public AbstractTab(){
+//        initUI();
+//    }
 
 }
