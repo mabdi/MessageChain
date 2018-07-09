@@ -165,19 +165,19 @@ public class TabMessages extends AbstractTab implements Context.ContextRequestCh
             requestViewer = callbacks.createTextEditor();
             JPanel reqPanel = new JPanel(new BorderLayout());
             JPanel reqToolbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            JButton btnReqParam = new JButton("Add param var");
-            btnReqParam.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JPopupMenu popup = new JPopupMenu();
-                    JMenuItem jmi = new JMenuItem("var");
-                    jmi.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            addPlaceHolder(requestViewer, Settings.PARAM_IDENTIFIER);
-                        }
-                    });
-                    popup.add(jmi);
+//            JButton btnReqParam = new JButton("Add param var");
+//            btnReqParam.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    JPopupMenu popup = new JPopupMenu();
+//                    JMenuItem jmi = new JMenuItem("var");
+//                    jmi.addActionListener(new ActionListener() {
+//                        @Override
+//                        public void actionPerformed(ActionEvent e) {
+//                            addPlaceHolder(requestViewer, Settings.PARAM_IDENTIFIER);
+//                        }
+//                    });
+//                    popup.add(jmi);
 //                    String[] params = strParams.split(",");
 //                    for (String p:params) {
 //                        final String data = Settings.PARAM_IDENTIFIER.replace("var", p.trim());
@@ -190,9 +190,9 @@ public class TabMessages extends AbstractTab implements Context.ContextRequestCh
 //                        });
 //                        popup.add(jmi);
 //                    }
-                    popup.show((Component)e.getSource(), 0, ((Component) e.getSource()).getHeight());
-                }
-            });
+//                    popup.show((Component)e.getSource(), 0, ((Component) e.getSource()).getHeight());
+//                }
+//            });
             JButton btnReqLocal = new JButton("Add local var");
             btnReqLocal.addActionListener(new ActionListener() {
                 @Override
@@ -231,7 +231,7 @@ public class TabMessages extends AbstractTab implements Context.ContextRequestCh
                     addPlaceHolder(requestViewer, Settings.GLOBAL_IDENTIFIER);
                 }
             });
-            reqToolbar.add(btnReqParam);
+//            reqToolbar.add(btnReqParam);
             reqToolbar.add(btnReqLocal);
             reqToolbar.add(btnReqGlobal);
 
